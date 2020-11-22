@@ -7,6 +7,7 @@ const popup = document.querySelector(".copy-container");
 const adjustButton = document.querySelectorAll(".adjust");
 const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
+const lockButton = document.querySelectorAll(".lock");
 let initialColors;
 
 // Event Listeners
@@ -43,6 +44,8 @@ closeAdjustments.forEach((button, index) => {
   });
 });
 
+generateBtn.addEventListener("click", randomColors);
+
 // Functions
 
 //Color Generator
@@ -52,7 +55,7 @@ function generateHex() {
 }
 
 function randomColors() {
-  // Add array to the variable
+  // Add empty array to the initialColors variable
   initialColors = [];
   // Loops over each color DIV
   colorDivs.forEach((div, index) => {
@@ -60,7 +63,6 @@ function randomColors() {
     const randomColor = generateHex();
     // Add it to the array
     initialColors.push(chroma(randomColor).hex());
-
     // Adds the color to the text and background of the div
     div.style.backgroundColor = randomColor;
     hexText.innerText = randomColor;
@@ -77,6 +79,11 @@ function randomColors() {
   });
   // Reset Inputs
   resetInputs();
+  // Check for Button Contrast
+  adjustButton.forEach((button, index) => {
+    checkTextContrast(initialColors[index], button);
+    checkTextContrast(initialColors[index], lockButton[index]);
+  });
 }
 
 function checkTextContrast(color, text) {
