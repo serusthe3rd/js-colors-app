@@ -135,7 +135,9 @@ input[type="range"] {
   outline: none;
 }
 
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0%;
   left: 0%;
@@ -149,7 +151,9 @@ input[type="range"] {
   pointer-events: none;
 }
 
-.copy-popup {
+.copy-popup,
+.save-popup,
+.library-popup {
   background: white;
   display: flex;
   justify-content: space-evenly;
@@ -159,18 +163,25 @@ input[type="range"] {
   transform: translateY(-2rem);
   min-width: 30%;
   min-height: 30vh;
+  flex-direction: column;
 }
 
-.copy-popup h4 {
+.copy-popup h4,
+.save-popup h4,
+.library-popup h4 {
   font-size: 2rem;
   padding: 2rem;
 }
 
-.copy-container.active {
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   opacity: 1;
   pointer-events: all;
 }
 
-.copy-popup.active {
+.copy-popup.active,
+.save-popup.active,
+.libray-popup.active {
   transform: translateY(0rem);
 }
