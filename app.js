@@ -44,6 +44,12 @@ closeAdjustments.forEach((button, index) => {
   });
 });
 
+lockButton.forEach((button, index) => {
+  button.addEventListener("click", (e) => {
+    lockLayer(e, index);
+  });
+});
+
 generateBtn.addEventListener("click", randomColors);
 
 // Functions
@@ -62,7 +68,12 @@ function randomColors() {
     const hexText = div.children[0];
     const randomColor = generateHex();
     // Add it to the array
-    initialColors.push(chroma(randomColor).hex());
+    if (div.classList.contains("locked")) {
+      initialColors.push(hexText.innerText);
+      return;
+    } else {
+      initialColors.push(chroma(randomColor).hex());
+    }
     // Adds the color to the text and background of the div
     div.style.backgroundColor = randomColor;
     hexText.innerText = randomColor;
@@ -191,6 +202,21 @@ function openAdjustmentPanel(index) {
 
 function closeAdjustmentPanel(index) {
   sliderContainers[index].classList.remove("active");
+}
+// Check this function again before making REPO PUBLIC
+function lockLayer(e, index) {
+  const lockSvg = e.target.children[0];
+  const activeBg = colorDivs[index];
+  activeBg.classList.toggle("locked");
+  if (lockSvg.classList.contains("fa-lock-open")) {
+    // e.target.innerHTML = `<i class="fas fa-lock"></i>`;
+    lockSvg.classList.remove("fa-lock-open");
+    lockSvg.classList.add("fa-lock");
+  } else {
+    // e.target.innerHTML = `<i class="fas fa-lock-open"></i>`;
+    lockSvg.classList.remove("fa-lock");
+    lockSvg.classList.add("fa-lock-open");
+  }
 }
 
 randomColors();
