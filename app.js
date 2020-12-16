@@ -9,7 +9,7 @@ const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
 const lockButton = document.querySelectorAll(".lock");
 let initialColors;
-// This is for lockal storage
+// This is for local storage
 let savedPalettes = [];
 
 // Event Listeners
@@ -258,7 +258,20 @@ function savePalette(e) {
   let paletteNr = savedPalettes.length;
   const paletteObj = { name, colors, nr: paletteNr };
   savedPalettes.push(paletteObj);
-  console.log(savedPalettes);
+  // Save to localStorage
+  saveToLocal(paletteObj);
+  saveInput.value = "";
+}
+
+function saveToLocal(paletteObj) {
+  let localPalettes;
+  if (localStorage.getItem("palettes") === null) {
+    localPalettes = [];
+  } else {
+    localPalettes = JSON.parse(localStorage.getItem("palettes"));
+  }
+  localPalettes.push(paletteObj);
+  localStorage.setItem("palettes", JSON.stringify(localPalettes));
 }
 
 randomColors();
