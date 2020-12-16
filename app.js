@@ -9,7 +9,7 @@ const closeAdjustments = document.querySelectorAll(".close-adjustment");
 const sliderContainers = document.querySelectorAll(".sliders");
 const lockButton = document.querySelectorAll(".lock");
 let initialColors;
-// This id for lockal storage
+// This is for lockal storage
 let savedPalettes = [];
 
 // Event Listeners
@@ -231,6 +231,7 @@ const saveInput = document.querySelector(".save-container input");
 // Local storage event listeners
 saveBtn.addEventListener("click", openPalette);
 closeSave.addEventListener("click", closePalette);
+submitSave.addEventListener("click", savePalette);
 
 // local storage functions
 function openPalette(e) {
@@ -243,6 +244,21 @@ function closePalette(e) {
   const popup = saveContainer.children[0];
   saveContainer.classList.remove("active");
   popup.classList.add("remove");
+}
+
+function savePalette(e) {
+  saveContainer.classList.remove("active");
+  popup.classList.remove("active");
+  const name = saveInput.value;
+  const colors = [];
+  currentHexes.forEach((hex) => {
+    colors.push(hex.innerText);
+  });
+  // Generate Object
+  let paletteNr = savedPalettes.length;
+  const paletteObj = { name, colors, nr: paletteNr };
+  savedPalettes.push(paletteObj);
+  console.log(savedPalettes);
 }
 
 randomColors();
