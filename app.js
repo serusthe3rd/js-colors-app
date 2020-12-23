@@ -340,6 +340,7 @@ function getLocal() {
     localPalettes = [];
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+    savedPalettes = [...savedPalettes];
     paletteObjects.forEach((paletteObj) => {
       // Generate the palette for library
       const palette = document.createElement("div");
