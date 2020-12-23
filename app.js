@@ -29,9 +29,9 @@ currentHexes.forEach((hex) => {
 });
 
 popup.addEventListener("transitionend", () => {
-  const popupbox = popup.children[0];
+  const popupBox = popup.children[0];
   popup.classList.remove("active");
-  popupbox.classList.remove("active");
+  popupBox.classList.remove("active");
 });
 
 adjustButton.forEach((button, index) => {
@@ -85,10 +85,10 @@ function randomColors() {
     const color = chroma(randomColor);
     const sliders = div.querySelectorAll(".sliders input");
     const hue = sliders[0];
-    const brightnes = sliders[1];
+    const brightness = sliders[1];
     const saturation = sliders[2];
 
-    colorizeSliders(color, hue, brightnes, saturation);
+    colorizeSliders(color, hue, brightness, saturation);
   });
   // Reset Inputs
   resetInputs();
@@ -108,7 +108,7 @@ function checkTextContrast(color, text) {
   }
 }
 
-function colorizeSliders(color, hue, brightnes, saturation) {
+function colorizeSliders(color, hue, brightness, saturation) {
   // Scale Saturation
   const noSat = color.set("hsl.s", 0);
   const fullSat = color.set("hsl.s", 1);
@@ -121,7 +121,7 @@ function colorizeSliders(color, hue, brightnes, saturation) {
   saturation.style.backgroundImage = `linear-gradient(to right, ${scaleSat(
     0
   )},${scaleSat(1)})`;
-  brightnes.style.backgroundImage = `linear-gradient(to right, ${scaleBright(
+  brightness.style.backgroundImage = `linear-gradient(to right, ${scaleBright(
     0
   )},${scaleBright(0.5)},${scaleBright(1)})`;
   hue.style.backgroundImage = `linear-gradient(to right, rgb(204,75,75),
@@ -136,19 +136,19 @@ function hslControls(e) {
 
   let sliders = e.target.parentElement.querySelectorAll('input[type="range"]');
   const hue = sliders[0];
-  const brightnes = sliders[1];
+  const brightness = sliders[1];
   const saturation = sliders[2];
 
   const bgColor = initialColors[index];
 
   let color = chroma(bgColor)
     .set("hsl.s", saturation.value)
-    .set("hsl.l", brightnes.value)
+    .set("hsl.l", brightness.value)
     .set("hsl.h", hue.value);
 
   colorDivs[index].style.backgroundColor = color;
   // Colorize sliders
-  colorizeSliders(color, hue, brightnes, saturation);
+  colorizeSliders(color, hue, brightness, saturation);
 }
 
 function updateTextUI(index) {
@@ -211,13 +211,13 @@ function lockLayer(e, index) {
   const activeBg = colorDivs[index];
   activeBg.classList.toggle("locked");
   if (lockSvg.classList.contains("fa-lock-open")) {
-    // e.target.innerHTML = `<i class="fas fa-lock"></i>`;
-    lockSvg.classList.remove("fa-lock-open");
-    lockSvg.classList.add("fa-lock");
+    e.target.innerHTML = `<i class="fas fa-lock"></i>`;
+    // lockSvg.classList.remove("fa-lock-open");
+    // lockSvg.classList.add("fa-lock");
   } else {
-    // e.target.innerHTML = `<i class="fas fa-lock-open"></i>`;
-    lockSvg.classList.remove("fa-lock");
-    lockSvg.classList.add("fa-lock-open");
+    e.target.innerHTML = `<i class="fas fa-lock-open"></i>`;
+    // lockSvg.classList.remove("fa-lock");
+    // lockSvg.classList.add("fa-lock-open");
   }
 }
 
@@ -340,7 +340,7 @@ function getLocal() {
     localPalettes = [];
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
-    savedPalettes = [...savedPalettes];
+    savedPalettes = [...paletteObjects];
     paletteObjects.forEach((paletteObj) => {
       // Generate the palette for library
       const palette = document.createElement("div");
