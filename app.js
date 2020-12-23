@@ -260,7 +260,13 @@ function savePalette(e) {
     colors.push(hex.innerText);
   });
   // Generate Object
-  let paletteNr = savedPalettes.length;
+  let paletteNr;
+  const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+  if (paletteObjects) {
+    paletteNr = paletteObjects.length;
+  } else {
+    paletteNr = savedPalettes.length;
+  }
   const paletteObj = { name, colors, nr: paletteNr };
   savedPalettes.push(paletteObj);
   // Save to localStorage
@@ -331,7 +337,7 @@ function closeLibrary() {
 
 function getLocal() {
   if (localStorage.getItem("palettes") === null) {
-    localStorage = [];
+    localPalettes = [];
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
     paletteObjects.forEach((paletteObj) => {
